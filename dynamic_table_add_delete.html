@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>jQuery dynamic table</title>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body{ margin:20px auto;}
+button{ margin-right:10px;}
+button:first-child{ margin-right:0;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+	<div class="form-group clearfix">
+    	<div class="row">
+            <div class="col-sm-7">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <input type="text" placeholder="Enter Sl. no." class="form-control" id="rowno"/>
+                    </div>
+                    <div class="col-xs-4">    
+                        <button class="btn btn-danger" data-action="deleterow">Delete</button>
+                    </div>  
+                 </div>     
+            </div>
+            <div class="col-sm-5">
+                <button class="btn btn-danger pull-right" data-action="deletelastrow">Delete Last Row</button>        
+                <button class="btn btn-danger pull-right" data-action="deletefirstrow">Delete First Row</button>
+            </div>  
+         </div>     
+    </div>
+    
+    <div class="form-group clearfix">
+    	<div class="row">
+        	 <div class="col-sm-7">
+             	<div class="row addvalueBox">
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="Enter City1" class="form-control"/>
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="text" placeholder="Enter City2" class="form-control"/>
+                    </div>
+                 </div>   
+            </div>    
+            <div class="col-sm-5">
+            	<button class="btn btn-success" data-action="addlastrow">Add</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="dynamicTable.js"></script>
+<script>
+	$(document).ready(function() {
+		$(".container").createTable({
+			"thead": ["Sl. No.","City 1", "City 2"],
+				"tbody": [
+					["1","New York", "LA"], 
+					["2","Paris", "Milan"], 
+					["3","Pittsburg", "Wichita"]
+				]
+		});
+		//remove table row
+		$("button").click(function() {
+			var getSelection = $(this).attr("data-action");
+			var gettxt = $("#rowno").val();
+			$(".container").deleteRow(gettxt,getSelection);
+		});
+		//add table row
+		$("button").click(function() {
+			var getSelection = $(this).attr("data-action");
+			var slno = $('.table tbody tr:last td:first').text();
+			$(".container").addRow(slno,getSelection);
+		});
+    });
+</script>
+</body>
+</html>
